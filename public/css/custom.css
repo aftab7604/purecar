@@ -52,3 +52,17 @@
     border: 2px dashed #00f;
     background-color: rgba(0, 0, 255, 0.1);
 }
+
+.c-navbar-nav {
+    background: #030303 !important;
+}
+
+.c-navbar-item>a {
+    color: #FFFFFF !important;
+}
+
+.c-btn {
+    text-decoration: none;
+    padding: 1em;
+    border-radius: 3em;
+}
