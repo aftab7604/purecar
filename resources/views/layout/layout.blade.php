@@ -72,7 +72,7 @@
 </head>
 
 <body class="border-top">
-    <nav class="navbar navbar-expand-lg mt-lg-2 ps-lg-3 pe-lg-3 pt-0 c-navbar-nav" style="z-index:999;">
+    <nav class="navbar navbar-expand-lg mt-lg-2 ps-lg-3 pe-lg-3 pt-2 c-navbar-nav" style="z-index:999;">
         <div class="container-fluid d-flex justify-content-between align-items-center" style="z-index: 1000;">
             <a class="navbar-brand fw-bold d-none d-md-block" href="{{ url('/') }}">
                 <img class="logo img-fluid" src="{{ asset('assets/logodark.svg') }}" alt="">
@@ -189,7 +189,7 @@
                 <a href="javascript:void(0);" id="submitListingBtn" style="min-width: 160px;"
                     class="c-btn bg-white text-black pt-2 pb-2 d-none d-lg-block" type="submit"
                     onclick="redirectToPage()">
-                    Sell Your Car <i class="fas fa-circle-arrow-right ml-10"></i>
+                    Sell Your Car <i style="width: 1em;" class="fas fa-circle-arrow-right"></i>
                 </a>
             </div>
         </div>
