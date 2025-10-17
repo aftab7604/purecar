@@ -89,11 +89,11 @@
          margin:10px auto 0 auto;
         justify-content: center;
         align-items: center;">
-                                                                    <img class="rounded-3" src="{{ asset('images/page_sections/' . $sections->where('section', 'hero')[0]->value) }}" alt="" style="width: 100%; height: 240px; object-fit: cover;">
-                                                                </div>
-                                                                <div class="first_car-1">
-                                                                    <img src="{{ asset('images/page_sections/' . $sections->where('section', 'hero')[0]->value) }}" alt="" >
-                                                                </div>  -->
+                                                                                                                                    <img class="rounded-3" src="{{ asset('images/page_sections/' . $sections->where('section', 'hero')[0]->value) }}" alt="" style="width: 100%; height: 240px; object-fit: cover;">
+                                                                                                                                </div>
+                                                                                                                                <div class="first_car-1">
+                                                                                                                                    <img src="{{ asset('images/page_sections/' . $sections->where('section', 'hero')[0]->value) }}" alt="" >
+                                                                                                                                </div>  -->
     <script>
         // the below script comments out the form via javascript to avoid hiddeen input
         document.addEventListener('DOMContentLoaded', function() {
@@ -127,27 +127,22 @@
             <div class="desktop-hero-section-innerbox">
                 {{-- <h1>{{ $sections->where('section', 'hero')[1]->value }}</h1> --}}
                 <!-- <p>{{ $sections->where('section', 'hero')[2]->value }}</p> -->
-                <form method="GET" action="{{ route('search_car') }}" style="margin-top:30px; pointer-events: auto;"
-                    id="desktopform">
+                <form method="GET" action="{{ route('search_car') }}" style="pointer-events: auto;" id="desktopform">
                     @csrf
                     <div class="">
-                        <!-- make model row  -->
+                        <!-- make model variant row  -->
                         <div class="search_box_dropdown_menu">
                             <!-- Make Dropdown -->
                             <div class="dropdown_menu_first_col">
+                                <label class="input-label">Make</label>
                                 <div class="pt-1 pb-1 dropdown rounded-3 search_color">
                                     <button
                                         class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
-                                        type="button" id="makeDropdown" data-bs-toggle="dropdown">
-                                        Make
+                                        type="button" id="makeDropdown" data-bs-toggle="dropdown"
+                                        data-default-text="Select Make">
+                                        Select Make
                                     </button>
                                     <ul class="dropdown-menu scrollable-dropdown">
-                                        <!-- <li>
-                                                                                                            <a class="dropdown-item" href="javascript:void(0)"
-                                                                                                            onclick="updateDropdownText('Any', 'makeDropdown', 'makeInput')">
-                                                                                                                Any
-                                                                                                            </a>
-                                                                                                        </li> -->
                                         @foreach ($search_field['make'] as $make)
                                             <li>
                                                 <a class="dropdown-item" href="javascript:void(0)"
@@ -162,51 +157,49 @@
                             </div>
                             <!-- Model Dropdown -->
                             <div class="dropdown_menu_second_col">
+                                <label class="input-label">Model</label>
                                 <div class="pt-1 pb-1 dropdown rounded-3 search_color">
                                     <button
                                         class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
                                         type="button" id="modelDropdown" data-bs-toggle="dropdown" disabled>
-                                        Model
+                                        Select Model
                                     </button>
                                     <ul class="dropdown-menu scrollable-dropdown" id="modelList">
                                         <li>
                                             <a class="dropdown-item" href="javascript:void(0)"
                                                 onclick="updateDropdownText('Any', 'modelDropdown', 'modelInput')">
-
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <input type="hidden" name="model" id="modelInput" value="">
                             </div>
-                        </div>
-
-
-                        <!-- Variant Dropdown -->
-
-                        <div class="mb-2">
-                            <div class="pt-1 pb-1 dropdown rounded-3 search_color">
-                                <button
-                                    class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
-                                    type="button" id="variantDropdown" data-bs-toggle="dropdown" disabled>
-                                    Variant
-                                </button>
-                                <ul class="dropdown-menu scrollable-dropdown" id="variantList">
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)"
-                                            onclick="updateDropdownText('Any', 'variantDropdown', 'variantInput')">
-
-                                        </a>
-                                    </li>
-                                </ul>
+                            <!-- Variant Dropdown -->
+                            <div class="dropdown_menu_second_col">
+                                <label class="input-label">Variant</label>
+                                <div class="pt-1 pb-1 dropdown rounded-3 search_color">
+                                    <button
+                                        class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
+                                        type="button" id="variantDropdown" data-bs-toggle="dropdown" disabled>
+                                        Select Variant
+                                    </button>
+                                    <ul class="dropdown-menu scrollable-dropdown" id="variantList">
+                                        <li>
+                                            <a class="dropdown-item" href="javascript:void(0)"
+                                                onclick="updateDropdownText('Any', 'variantDropdown', 'variantInput')">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="variant" id="variantInput" value="">
                             </div>
-                            <input type="hidden" name="variant" id="variantInput" value="">
                         </div>
 
                         <!-- price to and from row  -->
                         <div class="search_box_dropdown_menu">
                             <!-- Price From Dropdown -->
-                            <div class="dropdown_menu_second_col">
+                            <div class="dropdown_menu_first_col">
+                                <label class="input-label">Price From</label>
                                 <div class="pt-1 pb-1 dropdown rounded-3 search_color">
                                     <button
                                         class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
@@ -215,12 +208,6 @@
                                     </button>
                                     <ul class="overflow-auto dropdown-menu" style="max-height: 300px;"
                                         id="pricefromDropdownList">
-                                        <!-- <li>
-                                                                                                            <a class="dropdown-item" href="javascript:void(0)"
-                                                                                                            onclick="updateDropdownText('Any', 'pricefromDropdown', 'pricefromInput', 'Any')">
-                                                                                                                Any
-                                                                                                            </a>
-                                                                                                        </li> -->
                                         @foreach ($price_counts as $price_range)
                                             <li>
                                                 <a class="dropdown-item" href="javascript:void(0)"
@@ -234,7 +221,8 @@
                                 <input type="hidden" name="price_from" id="pricefromInput" value="">
                             </div>
                             <!-- Price To Dropdown -->
-                            <div class="dropdown_menu_first_col">
+                            <div class="dropdown_menu_second_col">
+                                <label class="input-label">Price To</label>
                                 <div class="pt-1 pb-1 dropdown rounded-3 search_color">
                                     <button
                                         class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
@@ -243,17 +231,10 @@
                                     </button>
                                     <ul class="overflow-auto dropdown-menu" style="max-height: 300px;"
                                         id="priceDropdownList">
-                                        <!-- <li>
-                                                                                                            <a class="dropdown-item" href="javascript:void(0)"
-                                                                                                            onclick="updateDropdownText('Any', 'pricetoDropdown', 'pricetoInput')">
-                                                                                                                Any
-                                                                                                            </a>
-                                                                                                        </li> -->
                                         @foreach ($price_counts as $price_range)
                                             <li>
                                                 <a class="dropdown-item" href="javascript:void(0)"
                                                     onclick="updateDropdownText('{{ $price_range['max'] }}', 'pricetoDropdown', 'pricetoInput', '£{{ number_format($price_range['max']) }} ({{ $price_range['count'] }})')">
-
                                                     £{{ number_format($price_range['max']) }}&nbsp;&nbsp;&nbsp;&nbsp;({{ $price_range['count'] }})
                                                 </a>
                                             </li>
@@ -262,12 +243,9 @@
                                 </div>
                                 <input type="hidden" name="price_to" id="pricetoInput" value="">
                             </div>
-
-                        </div>
-
-                        <div class="search_box_dropdown_menu">
                             <!-- Year From Dropdown -->
                             <div class="dropdown_menu_second_col">
+                                <label class="input-label">Year From</label>
                                 <div class="pt-1 pb-1 dropdown rounded-3 search_color">
                                     <button
                                         class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
@@ -276,12 +254,6 @@
                                     </button>
                                     <ul class="overflow-auto dropdown-menu" style="max-height: 300px;"
                                         id="yearfromDropdownList">
-                                        <!-- <li>
-                                                                                                            <a class="dropdown-item" href="javascript:void(0)"
-                                                                                                            onclick="updateDropdownText('Any', 'yearfromDropdown', 'yearfromInput', 'Any')">
-                                                                                                                Any
-                                                                                                            </a>
-                                                                                                        </li> -->
                                         @foreach ($year_counts as $year_range)
                                             <li>
                                                 <a class="dropdown-item" href="javascript:void(0)"
@@ -295,7 +267,8 @@
                                 <input type="hidden" name="year_from" id="yearfromInput" value="">
                             </div>
                             <!-- Year To Dropdown -->
-                            <div class="dropdown_menu_first_col">
+                            <div class="dropdown_menu_second_col">
+                                <label class="input-label">Year To</label>
                                 <div class="pt-1 pb-1 dropdown rounded-3 search_color">
                                     <button
                                         class="btn search_color dropdown-toggle w-100 d-flex justify-content-between align-items-center"
@@ -304,12 +277,6 @@
                                     </button>
                                     <ul class="overflow-auto dropdown-menu" style="max-height: 300px;"
                                         id="yeartoDropdownList">
-                                        <!-- <li>
-                                                                                                            <a class="dropdown-item" href="javascript:void(0)"
-                                                                                                            onclick="updateDropdownText('Any', 'yeartoDropdown', 'yeartoInput')">
-                                                                                                                Any
-                                                                                                            </a>
-                                                                                                        </li> -->
                                         @foreach ($year_counts as $year_range)
                                             <li>
                                                 <a class="dropdown-item" href="javascript:void(0)"
@@ -322,17 +289,28 @@
                                 </div>
                                 <input type="hidden" name="year_to" id="yeartoInput" value="">
                             </div>
-
                         </div>
 
 
 
 
-                        <div style="display: flex; flex-direction:column; align-items:center; gap:7px;">
-                            <button id="searchButton" class="btn btn-dark mt-3" style="width:100%;">Search</button>
-                            <a onclick="clearFilters()" class="text-center"
-                                style="cursor: pointer; color: #007bff; font-weight: bold; text-decoration: none;">Clear
-                                All</a>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                            <button type="button" class="filter-btn"
+                                style="border: 1px solid #d9dadd; background: #ffffff; color: #525866; padding: 10px 20px; border-radius: 14px; display: flex; align-items: center; gap: 8px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" viewBox="0 0 16 16">
+                                    <path
+                                        d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z" />
+                                </svg>
+                                More Filters
+                            </button>
+                            <div style="display: flex; gap: 10px;">
+                                <a onclick="clearFilters()" class="text-center"
+                                    style="cursor: pointer; border: 1px solid #d9dadd; background: #ffffff; color: #fb3748; padding: 10px 20px; border-radius: 14px; text-decoration: none;">Clear
+                                    All</a>
+                                <button id="searchButton" class="search-btn"
+                                    style="background: #000000; color: #ffffff; border: none; padding: 10px 30px; border-radius: 14px;">Search</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -354,8 +332,8 @@
                         {{ $sections->where('section', 'hero')[1]->value }}
                     </h1>
                     <!-- <p style="color:white; font-size:16px; margin:0; padding:0;">
-                                                                                    {{ $sections->where('section', 'hero')[2]->value }}
-                                                                                </p> -->
+                                                                                                                                                    {{ $sections->where('section', 'hero')[2]->value }}
+                                                                                                                                                </p> -->
                 </div>
             </div>
         </div>
@@ -374,8 +352,8 @@
                             </button>
                             <ul class="dropdown-menu scrollable-dropdown">
                                 <!-- <li>
-                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'makeDropdown', 'makeInput')">Any</a>
-                                                                                </li> -->
+                                                                                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'makeDropdown', 'makeInput')">Any</a>
+                                                                                                                                                </li> -->
                                 @foreach ($search_field['make'] as $make)
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)"
@@ -399,8 +377,8 @@
                             </button>
                             <ul class="dropdown-menu scrollable-dropdown " id="modelList">
                                 <!-- <li>
-                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'modelDropdown', 'modelInput')">Any</a>
-                                                                                </li> -->
+                                                                                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'modelDropdown', 'modelInput')">Any</a>
+                                                                                                                                                </li> -->
                             </ul>
                         </div>
                         <input type="hidden" name="model" id="modelInput" value="">
@@ -417,8 +395,8 @@
                         </button>
                         <ul class="dropdown-menu scrollable-dropdown" id="variantList">
                             <!-- <li>
-                                                                                <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'variantDropdown', 'variantInput')">Any</a>
-                                                                              </li> -->
+                                                                                                                                                <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'variantDropdown', 'variantInput')">Any</a>
+                                                                                                                                              </li> -->
                         </ul>
                     </div>
                     <input type="hidden" name="variant" id="variantInput" value="">
@@ -436,8 +414,8 @@
                             <ul class="overflow-auto dropdown-menu" style="max-height: 300px;"
                                 id="pricefromDropdownList">
                                 <!-- <li>
-                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'pricefromDropdown', 'pricefromInput', 'Any')">Any</a>
-                                                                                </li> -->
+                                                                                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'pricefromDropdown', 'pricefromInput', 'Any')">Any</a>
+                                                                                                                                                </li> -->
                                 @foreach ($price_counts as $price_range)
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)"
@@ -459,8 +437,8 @@
                             </button>
                             <ul class="overflow-auto dropdown-menu" style="max-height: 300px;" id="priceDropdownList">
                                 <!-- <li>
-                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'pricetoDropdown', 'pricetoInput')">Any</a>
-                                                                                </li> -->
+                                                                                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'pricetoDropdown', 'pricetoInput')">Any</a>
+                                                                                                                                                </li> -->
                                 @foreach ($price_counts as $price_range)
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)"
@@ -488,8 +466,8 @@
                             </button>
                             <ul class="overflow-auto dropdown-menu" style="max-height: 300px;" id="yearfromDropdownList">
                                 <!-- <li>
-                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'yearfromDropdown', 'yearfromInput', 'Any')">Any</a>
-                                                                                </li> -->
+                                                                                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'yearfromDropdown', 'yearfromInput', 'Any')">Any</a>
+                                                                                                                                                </li> -->
                                 @foreach ($year_counts as $year_range)
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)"
@@ -511,8 +489,8 @@
                             </button>
                             <ul class="overflow-auto dropdown-menu" style="max-height: 300px;" id="yeartoDropdownList">
                                 <!-- <li>
-                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'yeartoDropdown', 'yeartoInput')">Any</a>
-                                                                                </li> -->
+                                                                                                                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownText('Any', 'yeartoDropdown', 'yeartoInput')">Any</a>
+                                                                                                                                                </li> -->
                                 @foreach ($year_counts as $year_range)
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)"
@@ -627,6 +605,107 @@
                 history.back(); // Go back to the previous state (before modal opened)
             }
         }
+    </script>
+
+
+    <script>
+        // Override the initialization to preserve button text
+        (function() {
+            const originalTexts = {
+                makeDropdown: 'Select Make',
+                modelDropdown: 'Select Model',
+                variantDropdown: 'Select Variant'
+            };
+
+            // Function to update search button text
+            function updateSearchButtonText(count) {
+                const searchButton = document.getElementById('searchButton');
+                if (count > 0) {
+                    searchButton.textContent = `Search ${count} cars`;
+                } else {
+                    searchButton.textContent = 'Search';
+                }
+            }
+
+            // Override the updateDropdownText function
+            window.updateDropdownText = function(value, dropdownId, inputId, displayLabel = null) {
+                const dropdown = document.getElementById(dropdownId);
+                const input = document.getElementById(inputId);
+
+                if (!dropdown || !input) {
+                    console.error(`Missing dropdown or input for ID: ${dropdownId} / ${inputId}`);
+                    return;
+                }
+
+                input.value = value;
+
+                // Only update text if we have a real value
+                if (value && value !== 'Any') {
+                    dropdown.textContent = displayLabel || value;
+                    dropdown.style.color = '#000000';
+                } else {
+                    // Reset to original text and style
+                    dropdown.textContent = originalTexts[dropdownId] || dropdown.textContent;
+                    dropdown.style.color = '#525866';
+                }
+
+                if (dropdownId === 'makeDropdown') {
+                    if (!value || value === 'Any') {
+                        document.getElementById('modelDropdown').textContent = originalTexts.modelDropdown;
+                        document.getElementById('variantDropdown').textContent = originalTexts.variantDropdown;
+                    }
+                } else if (dropdownId === 'modelDropdown') {
+                    if (!value || value === 'Any') {
+                        document.getElementById('variantDropdown').textContent = originalTexts.variantDropdown;
+                    }
+                }
+
+                updateAllDropdowns();
+                updateSearchCount();
+            };
+
+            // Override the clearFilters function
+            window.clearFilters = function() {
+                const inputs = document.querySelectorAll('input[type="hidden"]');
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+
+                // Reset dropdowns to original text
+                Object.entries(originalTexts).forEach(([id, text]) => {
+                    const dropdown = document.getElementById(id);
+                    if (dropdown) {
+                        dropdown.textContent = text;
+                        if (id !== 'makeDropdown') {
+                            dropdown.disabled = true;
+                        }
+                    }
+                });
+
+                window.currentFilters = {
+                    make: '',
+                    model: '',
+                    variant: '',
+                    pricefrom: '',
+                    priceto: '',
+                    yearfrom: '',
+                    yearto: ''
+                };
+
+                updateAllDropdowns();
+                updateSearchCount();
+            };
+
+            // Set initial text on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                Object.entries(originalTexts).forEach(([id, text]) => {
+                    const dropdown = document.getElementById(id);
+                    if (dropdown) {
+                        dropdown.textContent = text;
+                    }
+                });
+            });
+        })();
     </script>
 
 
@@ -760,65 +839,65 @@
 
     <!-- Buying Essentails Section -->
     <!-- <section class="text-center buyingessentials third_container" style="margin-top:0px;">
-                                                                    <h4 style="font-size: 30px; margin-top: 10px; margin-bottom: 10px;">Buying Essentials</h4>
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_1')->first()->value }}">
-                                                                                <div class="essential-card">
-                                                                                    <div class="d-flex flex-column align-items-center">
-                                                                                        <div class="icon-container">
-                                                                                            <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_1')->first()->value) }}');">
-                                                                                            </div>
-                                                                                        </div>
+                                                                                                                                    <h4 style="font-size: 30px; margin-top: 10px; margin-bottom: 10px;">Buying Essentials</h4>
+                                                                                                                                    <div class="container">
+                                                                                                                                        <div class="row">
+                                                                                                                                            <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_1')->first()->value }}">
+                                                                                                                                                <div class="essential-card">
+                                                                                                                                                    <div class="d-flex flex-column align-items-center">
+                                                                                                                                                        <div class="icon-container">
+                                                                                                                                                            <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_1')->first()->value) }}');">
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
 
-                                                                                        <p class="primary-text">{{ $sections->where('name', 'card_title_text_1')->first()->value }}</p>
-                                                                                        <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_1')->first()->value }}</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_2')->first()->value }}">
-                                                                                <div class="essential-card">
-                                                                                    <div class="d-flex flex-column align-items-center">
-                                                                                        <div class="icon-container">
-                                                                                            <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_2')->first()->value) }}');">
-                                                                                            </div>
-                                                                                        </div>
+                                                                                                                                                        <p class="primary-text">{{ $sections->where('name', 'card_title_text_1')->first()->value }}</p>
+                                                                                                                                                        <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_1')->first()->value }}</p>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_2')->first()->value }}">
+                                                                                                                                                <div class="essential-card">
+                                                                                                                                                    <div class="d-flex flex-column align-items-center">
+                                                                                                                                                        <div class="icon-container">
+                                                                                                                                                            <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_2')->first()->value) }}');">
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
 
-                                                                                        <p class="primary-text">{{ $sections->where('name', 'card_title_text_2')->first()->value }}</p>
-                                                                                        <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_2')->first()->value }}</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_3')->first()->value }}">
-                                                                                <div class="essential-card">
-                                                                                    <div class="d-flex flex-column align-items-center">
-                                                                                        <div class="icon-container">
-                                                                                            <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_3')->first()->value) }}');">
-                                                                                            </div>
-                                                                                        </div>
+                                                                                                                                                        <p class="primary-text">{{ $sections->where('name', 'card_title_text_2')->first()->value }}</p>
+                                                                                                                                                        <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_2')->first()->value }}</p>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_3')->first()->value }}">
+                                                                                                                                                <div class="essential-card">
+                                                                                                                                                    <div class="d-flex flex-column align-items-center">
+                                                                                                                                                        <div class="icon-container">
+                                                                                                                                                            <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_3')->first()->value) }}');">
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
 
-                                                                                        <p class="primary-text">{{ $sections->where('name', 'card_title_text_3')->first()->value }}</p>
-                                                                                        <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_3')->first()->value }}</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                                <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_1')->first()->value }}">
-                                                                                    <div class="essential-card">
-                                                                                        <div class="d-flex flex-column align-items-center">
-                                                                                            <div class="icon-container">
-                                                                                                <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_4')->first()->value) }}');">
-                                                                                                </div>
-                                                                                            </div>
+                                                                                                                                                        <p class="primary-text">{{ $sections->where('name', 'card_title_text_3')->first()->value }}</p>
+                                                                                                                                                        <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_3')->first()->value }}</p>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                                <div class="my-3 col-lg-3 col-md-4 col-sm-12 clickable-image" data-link="{{ $sections->where('name', 'card_link_1')->first()->value }}">
+                                                                                                                                                    <div class="essential-card">
+                                                                                                                                                        <div class="d-flex flex-column align-items-center">
+                                                                                                                                                            <div class="icon-container">
+                                                                                                                                                                <div class="icon-container-inner" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('name', 'card_image_4')->first()->value) }}');">
+                                                                                                                                                                </div>
+                                                                                                                                                            </div>
 
-                                                                                            <p class="primary-text">{{ $sections->where('name', 'card_title_text_4')->first()->value }}</p>
-                                                                                            <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_4')->first()->value }}</p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
+                                                                                                                                                            <p class="primary-text">{{ $sections->where('name', 'card_title_text_4')->first()->value }}</p>
+                                                                                                                                                            <p class="secondary-text">{{ $sections->where('name', 'card_desc_text_4')->first()->value }}</p>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                        </div>
-                                                                    </div>
-                                                                </section> -->
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                </section> -->
     <style>
         @media (max-width: 767px) {
             .buyingessentials .row {
@@ -1026,16 +1105,16 @@
                             <div class="car_card_main_img">
                                 ${car.image ?
                                     `<div class="car_card_inner_img">
-                                                                                                    <div class="car_card_background_img" style="background-image: url('${car.image}');"></div>
-                                                                                                    <img src="${car.image}"
-                                                                                                        alt="Car Image"
-                                                                                                        onload="this.naturalWidth > this.naturalHeight ? this.style.objectFit = 'cover' : this.style.objectFit = 'contain'"
-                                                                                                        onerror="this.src='{{ asset('assets/coming_soon.png') }}'" 
-                                                                                                        class="car_card_front_img">
-                                                                                                </div>` :
+                                                                                                                                                                    <div class="car_card_background_img" style="background-image: url('${car.image}');"></div>
+                                                                                                                                                                    <img src="${car.image}"
+                                                                                                                                                                        alt="Car Image"
+                                                                                                                                                                        onload="this.naturalWidth > this.naturalHeight ? this.style.objectFit = 'cover' : this.style.objectFit = 'contain'"
+                                                                                                                                                                        onerror="this.src='{{ asset('assets/coming_soon.png') }}'" 
+                                                                                                                                                                        class="car_card_front_img">
+                                                                                                                                                                </div>` :
                                     `<img src="/assets/images/default-car.png"
-                                                                                                    alt="Default Car Image"
-                                                                                                    class="default_car_img">`
+                                                                                                                                                                    alt="Default Car Image"
+                                                                                                                                                                    class="default_car_img">`
                                 }
                             </div>
                         </div>
@@ -1229,13 +1308,13 @@
 
     <!-------------sixth page content-------------------->
     <!-- <section class="d-none d-md-block">
-                                                                    <div class="sixth_container" style="
+                                                                                                                                    <div class="sixth_container" style="
         position: relative;
         padding-bottom: 40px;
         overflow: hidden;
         margin-top:70px;
         ">
-                                                                    <div style="
+                                                                                                                                    <div style="
             position: absolute;
             top: 0;
             left: 0;
@@ -1246,67 +1325,67 @@
             background-repeat: no-repeat;
             background-size: cover;
             z-index: 1;">
-                                                                    </div>
-                                                                    
+                                                                                                                                    </div>
+                                                                                                                                    
 
-                                                                    <div style="position: relative; z-index: 2;">
-                                                                <h4 class="mb-2 text-center" style="font-size: 30px; margin-top: 10px; margin-bottom: 10px;">Latest Forum Posts</h4>
-                                                                <div class="gap-3 row d-flex gap-lg-4 justify-content-center" style="width: calc(100% - 100px); margin: auto 50px;">
-                                                                    @foreach ($forum_posts as $forum_post)
+                                                                                                                                    <div style="position: relative; z-index: 2;">
+                                                                                                                                <h4 class="mb-2 text-center" style="font-size: 30px; margin-top: 10px; margin-bottom: 10px;">Latest Forum Posts</h4>
+                                                                                                                                <div class="gap-3 row d-flex gap-lg-4 justify-content-center" style="width: calc(100% - 100px); margin: auto 50px;">
+                                                                                                                                    @foreach ($forum_posts as $forum_post)
     <div class="text-black col-12 col-md-6 col-lg-3 m-lg-1 card sixth_card p-0" style="overflow: hidden; border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; width: 320px;">
-                                                                            <div class="card-body clickable-image p-0" onclick="window.location.href='{{ route('forum.topic.show', $forum_post->slug) }}'">
-                                                                                @if ($forum_post->forumTopicCategory && $forum_post->forumTopicCategory->image)
+                                                                                                                                            <div class="card-body clickable-image p-0" onclick="window.location.href='{{ route('forum.topic.show', $forum_post->slug) }}'">
+                                                                                                                                                @if ($forum_post->forumTopicCategory && $forum_post->forumTopicCategory->image)
     <div class="image-container" style="position: relative; width: 100%; height: 200px; overflow: hidden;">
-                                                                                        <img src="{{ asset('' . $forum_post->forumTopicCategory->image) }}" alt="Category Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; image-rendering: crisp-edges;">
-                                                                                        <h5 class="sixth_h5" style="position: absolute; bottom: 3px; left: 10px; color: white; padding: 5px 5px; font-size: 25px; font-weight:500;">
-                                                                                            {{ $forum_post->forumTopicCategory ? $forum_post->forumTopicCategory->category : 'No title available' }}
-                                                                                        </h5>
-                                                                                    </div>
+                                                                                                                                                        <img src="{{ asset('' . $forum_post->forumTopicCategory->image) }}" alt="Category Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; image-rendering: crisp-edges;">
+                                                                                                                                                        <h5 class="sixth_h5" style="position: absolute; bottom: 3px; left: 10px; color: white; padding: 5px 5px; font-size: 25px; font-weight:500;">
+                                                                                                                                                            {{ $forum_post->forumTopicCategory ? $forum_post->forumTopicCategory->category : 'No title available' }}
+                                                                                                                                                        </h5>
+                                                                                                                                                    </div>
     @endif
 
-                                                                              
-                                                                                <h5 class="pb-2 card-title ps-3" style="font-size: 20px; font-weight:500; padding-top: 20px;">
-                                                                                    {{ substr($forum_post->topic, 0, 100) }}
-                                                                                </h5>
+                                                                                                                                              
+                                                                                                                                                <h5 class="pb-2 card-title ps-3" style="font-size: 20px; font-weight:500; padding-top: 20px;">
+                                                                                                                                                    {{ substr($forum_post->topic, 0, 100) }}
+                                                                                                                                                </h5>
 
-                                                                           
-                                                                                <div class="d-flex align-items-center gap-3 card-subtitle text-muted ps-3 m-0" style="padding-top: 0;">
-                                                                                    <div class="d-flex align-items-center">
-                                                                                        <i class="fas fa-calendar-alt calendar_icon" style="color: #000;"></i>
-                                                                                        <p class="sixth_date ms-2 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('M d, Y') }}</p>
-                                                                                    </div>
-                                                                                    <div class="d-flex align-items-center">
-                                                                                        <i class="fas fa-clock calendar_icon" style="color: #000;"></i>
-                                                                                        <p class="sixth_date ms-2 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('h:i a') }}</p>
-                                                                                    </div>
-                                                                                </div>
+                                                                                                                                           
+                                                                                                                                                <div class="d-flex align-items-center gap-3 card-subtitle text-muted ps-3 m-0" style="padding-top: 0;">
+                                                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                                                        <i class="fas fa-calendar-alt calendar_icon" style="color: #000;"></i>
+                                                                                                                                                        <p class="sixth_date ms-2 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('M d, Y') }}</p>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                                                        <i class="fas fa-clock calendar_icon" style="color: #000;"></i>
+                                                                                                                                                        <p class="sixth_date ms-2 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('h:i a') }}</p>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                @php
-                                                                                    $topiccontent = html_entity_decode(
-                                                                                        $forum_post->content,
-                                                                                    );
-                                                                                    $topiccontent = strip_tags(
-                                                                                        $topiccontent,
-                                                                                    );
-                                                                                @endphp
-                                                                                <p class="card-text ps-3 pb-1" style="padding-top: 0;">
-                                                                                    {{ strlen($topiccontent) > 191 ? substr($topiccontent, 0, 190) . '...' : $topiccontent }}
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
+                                                                                                                                                @php
+                                                                                                                                                    $topiccontent = html_entity_decode(
+                                                                                                                                                        $forum_post->content,
+                                                                                                                                                    );
+                                                                                                                                                    $topiccontent = strip_tags(
+                                                                                                                                                        $topiccontent,
+                                                                                                                                                    );
+                                                                                                                                                @endphp
+                                                                                                                                                <p class="card-text ps-3 pb-1" style="padding-top: 0;">
+                                                                                                                                                    {{ strlen($topiccontent) > 191 ? substr($topiccontent, 0, 190) . '...' : $topiccontent }}
+                                                                                                                                                </p>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
     @endforeach
-                                                                </div>
-                                                            </div>
+                                                                                                                                </div>
+                                                                                                                            </div>
 
 
 
 
-                                                                </div>
-                                                            </section> -->
+                                                                                                                                </div>
+                                                                                                                            </section> -->
 
     <!-- below sectioon is for mobile  -->
     <!-- <section class="d-block d-md-none">
-                                                                <div class="mobile_container" style="
+                                                                                                                                <div class="mobile_container" style="
         position: relative;
         padding-bottom: 40px;
         padding-left: 30px;
@@ -1314,161 +1393,161 @@
         overflow: hidden;
         margin-top: 30px;
         width: 100%;">
-                                                                    
-                                                                    <div style="position: relative; z-index: 2; width: 100%;">
-                                                                        <h4 class="mb-2 text-center" style="font-size: 30px; margin-top: 10px; margin-bottom: 10px;">Latest Forum Posts</h4>
-                                                                        <div class="row d-flex justify-content-center" style="width: 100%; margin: 0;">
-                                                                            @foreach ($forum_posts->take(3) as $forum_post)
+                                                                                                                                    
+                                                                                                                                    <div style="position: relative; z-index: 2; width: 100%;">
+                                                                                                                                        <h4 class="mb-2 text-center" style="font-size: 30px; margin-top: 10px; margin-bottom: 10px;">Latest Forum Posts</h4>
+                                                                                                                                        <div class="row d-flex justify-content-center" style="width: 100%; margin: 0;">
+                                                                                                                                            @foreach ($forum_posts->take(3) as $forum_post)
     <div class="col-12 card mobile_card p-0 mb-3" style="overflow: hidden; border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; width: 100%;">
-                                                                                    <div class="card-body clickable-image p-0" onclick="window.location.href='{{ route('forum.topic.show', $forum_post->slug) }}'">
-                                                                                        @if ($forum_post->forumTopicCategory && $forum_post->forumTopicCategory->image)
+                                                                                                                                                    <div class="card-body clickable-image p-0" onclick="window.location.href='{{ route('forum.topic.show', $forum_post->slug) }}'">
+                                                                                                                                                        @if ($forum_post->forumTopicCategory && $forum_post->forumTopicCategory->image)
     <div class="image-container" style="position: relative; width: 100%; height: 200px; overflow: hidden;">
-                                                                                                <img src="{{ asset('' . $forum_post->forumTopicCategory->image) }}" alt="Category Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
-                                                                                                <h5 class="mobile_h5" style="position: absolute; bottom: 5px; left: 10px; color: white; padding: 5px; font-size: 20px; font-weight:500;">
-                                                                                                    {{ $forum_post->forumTopicCategory ? $forum_post->forumTopicCategory->category : 'No title available' }}
-                                                                                                </h5>
-                                                                                            </div>
+                                                                                                                                                                <img src="{{ asset('' . $forum_post->forumTopicCategory->image) }}" alt="Category Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+                                                                                                                                                                <h5 class="mobile_h5" style="position: absolute; bottom: 5px; left: 10px; color: white; padding: 5px; font-size: 20px; font-weight:500;">
+                                                                                                                                                                    {{ $forum_post->forumTopicCategory ? $forum_post->forumTopicCategory->category : 'No title available' }}
+                                                                                                                                                                </h5>
+                                                                                                                                                            </div>
     @endif
 
-                                                                                        <h5 class="pb-2 card-title ps-3" style="font-size: 18px; font-weight:500; padding-top: 15px;">
-                                                                                            {{ substr($forum_post->topic, 0, 100) }}
-                                                                                        </h5>
+                                                                                                                                                        <h5 class="pb-2 card-title ps-3" style="font-size: 18px; font-weight:500; padding-top: 15px;">
+                                                                                                                                                            {{ substr($forum_post->topic, 0, 100) }}
+                                                                                                                                                        </h5>
 
-                                                                                        <div class="d-flex align-items-center gap-2 card-subtitle text-muted ps-3 m-0">
-                                                                                            <i class="fas fa-calendar-alt" style="color: #000;"></i>
-                                                                                            <p class="mobile_date ms-1 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('M d, Y') }}</p>
-                                                                                            <i class="fas fa-clock" style="color: #000;"></i>
-                                                                                            <p class="mobile_date ms-1 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('h:i a') }}</p>
-                                                                                        </div>
+                                                                                                                                                        <div class="d-flex align-items-center gap-2 card-subtitle text-muted ps-3 m-0">
+                                                                                                                                                            <i class="fas fa-calendar-alt" style="color: #000;"></i>
+                                                                                                                                                            <p class="mobile_date ms-1 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('M d, Y') }}</p>
+                                                                                                                                                            <i class="fas fa-clock" style="color: #000;"></i>
+                                                                                                                                                            <p class="mobile_date ms-1 mb-0">{{ \Carbon\Carbon::parse($forum_post->created_at)->format('h:i a') }}</p>
+                                                                                                                                                        </div>
 
-                                                                                        @php
-                                                                                            $topiccontent = html_entity_decode(
-                                                                                                $forum_post->content,
-                                                                                            );
-                                                                                            $topiccontent = strip_tags(
-                                                                                                $topiccontent,
-                                                                                            );
-                                                                                        @endphp
-                                                                                        <p class="card-text ps-3 pb-1" style="padding-top: 0;">
-                                                                                            {{ strlen($topiccontent) > 108 ? substr($topiccontent, 0, 108) . '...' : $topiccontent }}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </div>
+                                                                                                                                                        @php
+                                                                                                                                                            $topiccontent = html_entity_decode(
+                                                                                                                                                                $forum_post->content,
+                                                                                                                                                            );
+                                                                                                                                                            $topiccontent = strip_tags(
+                                                                                                                                                                $topiccontent,
+                                                                                                                                                            );
+                                                                                                                                                        @endphp
+                                                                                                                                                        <p class="card-text ps-3 pb-1" style="padding-top: 0;">
+                                                                                                                                                            {{ strlen($topiccontent) > 108 ? substr($topiccontent, 0, 108) . '...' : $topiccontent }}
+                                                                                                                                                        </p>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
     @endforeach
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </section> -->
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                            </section> -->
 
 
     <!-- <div class="seventh_container ms-0 ms-lg-5 d-none d-lg-block">
-                                                                    <div class="p-5 row" style="margin-bottom:40px; padding-top: 0 !important;" >
-                                                                        <div class="col-12 col-lg-6 ps-lg-5 img_div">
-                                                                            <div class="row img-div-seventh_container">
-                                                                                <div class="col-12 img-1" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('section', 'finance')[3]->value) }}'); background-size: cover; background-position: center;">
-                                                                                </div>
-                                                                              
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="gap-1 mt-5 col-12 col-lg-6 d-flex flex-column gap-lg-2 align-items-center text-left">
-                                                                            <h4 style="font-size: 30px;">
-                                                                                {{ $sections->where('section', 'finance')[5]->value }}
-                                                                            </h4>
-                                                                            <p>
-                                                                                {{ $sections->where('section', 'finance')[6]->value }}
-                                                                            </p>
-                                                                            <a href="{{ $sections->where('section', 'finance')->where('name', 'finance_button_link')->first()->value ?? route('blog.index') }}" class="btn btn-dark">Find out more</a>
-                                                                        </div>
+                                                                                                                                    <div class="p-5 row" style="margin-bottom:40px; padding-top: 0 !important;" >
+                                                                                                                                        <div class="col-12 col-lg-6 ps-lg-5 img_div">
+                                                                                                                                            <div class="row img-div-seventh_container">
+                                                                                                                                                <div class="col-12 img-1" style="background-image: url('{{ asset('images/page_sections/' . $sections->where('section', 'finance')[3]->value) }}'); background-size: cover; background-position: center;">
+                                                                                                                                                </div>
+                                                                                                                                              
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="gap-1 mt-5 col-12 col-lg-6 d-flex flex-column gap-lg-2 align-items-center text-left">
+                                                                                                                                            <h4 style="font-size: 30px;">
+                                                                                                                                                {{ $sections->where('section', 'finance')[5]->value }}
+                                                                                                                                            </h4>
+                                                                                                                                            <p>
+                                                                                                                                                {{ $sections->where('section', 'finance')[6]->value }}
+                                                                                                                                            </p>
+                                                                                                                                            <a href="{{ $sections->where('section', 'finance')->where('name', 'finance_button_link')->first()->value ?? route('blog.index') }}" class="btn btn-dark">Find out more</a>
+                                                                                                                                        </div>
 
-                                                                    </div>
-                                                                </div> -->
+                                                                                                                                    </div>
+                                                                                                                                </div> -->
 
 
 
     <!-- <div class="d-block d-lg-none">
-                                                                <div  style="margin-bottom: 60px !important; padding-top: 0; padding-bottom: 0; padding-left: 30px !important; padding-right: 30px !important;">
-                                                                    <div class="d-flex flex-column gap-lg-2">
-                                                                    <h4 style="font-size: 30px; text-align: center !important;">
-                                                                        {{ $sections->where('section', 'finance')[5]->value }}
-                                                                    </h4>
-                                                                        <p style="text-align: center !important;">{{ $sections->where('section', 'finance')[6]->value }}</p>
-                                                                        <a href="{{ $sections->where('section', 'finance')->where('name', 'finance_button_link')->first()->value ?? route('blog.index') }}" class="btn btn-dark">Find out more</a>
-                                                                    </div>
-                                                                </div>
-                                                                </div> -->
+                                                                                                                                <div  style="margin-bottom: 60px !important; padding-top: 0; padding-bottom: 0; padding-left: 30px !important; padding-right: 30px !important;">
+                                                                                                                                    <div class="d-flex flex-column gap-lg-2">
+                                                                                                                                    <h4 style="font-size: 30px; text-align: center !important;">
+                                                                                                                                        {{ $sections->where('section', 'finance')[5]->value }}
+                                                                                                                                    </h4>
+                                                                                                                                        <p style="text-align: center !important;">{{ $sections->where('section', 'finance')[6]->value }}</p>
+                                                                                                                                        <a href="{{ $sections->where('section', 'finance')->where('name', 'finance_button_link')->first()->value ?? route('blog.index') }}" class="btn btn-dark">Find out more</a>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                                </div> -->
 
 
     <!-- events section -->
 
     <!-- <div class="container" style="padding: 10px 15px;">
-                                                                 <h4 style="font-size: 30px; margin-top: 10px; margin-bottom: 20px; ">Recent Events</h4>
+                                                                                                                                 <h4 style="font-size: 30px; margin-top: 10px; margin-bottom: 20px; ">Recent Events</h4>
 
-                                                                 <div class="event-container">
-                                                                    @foreach ($events->take(3) as $event)
+                                                                                                                                 <div class="event-container">
+                                                                                                                                    @foreach ($events->take(3) as $event)
     <div onclick="window.location.href='{{ route('event.details', ['event' => $event->slug]) }}'"
-                                                                            style="" class="event-container-box">
+                                                                                                                                            style="" class="event-container-box">
 
-                                                                            
-                                                                            <div style="width: 100%; height: 200px; border-radius: 8px; position: relative; overflow: hidden;">
-                                                                              
-                                                                            
-                                                                          
-                                                                                <img src="{{ asset($event->featured_image) }}"
-                                                                                     alt="{{ $event->title }}"
-                                                                                     style="width: 100%; height: 100%; object-fit: cover; 
+                                                                                                                                            
+                                                                                                                                            <div style="width: 100%; height: 200px; border-radius: 8px; position: relative; overflow: hidden;">
+                                                                                                                                              
+                                                                                                                                            
+                                                                                                                                          
+                                                                                                                                                <img src="{{ asset($event->featured_image) }}"
+                                                                                                                                                     alt="{{ $event->title }}"
+                                                                                                                                                     style="width: 100%; height: 100%; object-fit: cover; 
                                 position: relative; z-index: 2;">
-                                                                            </div>
-                                                                                    
-                                                                
+                                                                                                                                            </div>
+                                                                                                                                                    
+                                                                                                                                
 
-                                                                                
-                                                                            <div style="padding: 10px; display: flex; justify-content:space-between; align-items:center;">
-                                                                                <h5>{{ $event->title }}</h5>
-                                                                                <a href="{{ route('event.details', ['event' => $event->id]) }}"
-                                                                                style="display: inline-block; color: #000000; text-decoration: none; margin-bottom:3px; rotate:45deg;">
-                                                                                    <h5><i class="fas fa-arrow-up"></i></h5>
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
+                                                                                                                                                
+                                                                                                                                            <div style="padding: 10px; display: flex; justify-content:space-between; align-items:center;">
+                                                                                                                                                <h5>{{ $event->title }}</h5>
+                                                                                                                                                <a href="{{ route('event.details', ['event' => $event->id]) }}"
+                                                                                                                                                style="display: inline-block; color: #000000; text-decoration: none; margin-bottom:3px; rotate:45deg;">
+                                                                                                                                                    <h5><i class="fas fa-arrow-up"></i></h5>
+                                                                                                                                                </a>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
     @endforeach
-                                                                </div>
+                                                                                                                                </div>
 
-                                                                </div>
-                                                                 <style>
-                                                                    @media screen and (max-width: 767px) {
-                                                                        .event-container{
-                                                                            display: flex;
-                                                                            flex-direction: column;
-                                                                            gap: 10px; j
-                                                                            ustify-content: space-between;
-                                                                            flex-wrap: wrap;
-                                                                        }
-                                                                        .event-container-box{
-                                                                            flex: 1;
-                                                                            width: 100%;
-                                                                            border-radius: 8px;
-                                                                            overflow: hidden;
-                                                                            cursor: pointer;
-                                                                            text-align: center;
-                                                                        }
-                                                                    }
-                                                                    @media screen and (min-width: 768px) {
-                                                                        .event-container{
-                                                                            display: flex;
-                                                                            gap: 10px; j
-                                                                            ustify-content: space-between;
-                                                                            flex-wrap: wrap;
-                                                                        }
-                                                                        .event-container-box{
-                                                                            flex: 1;
-                                                                            width: 30%;
-                                                                            border-radius: 8px;
-                                                                            overflow: hidden;
-                                                                            cursor: pointer;
-                                                                            text-align: center;
-                                                                        }
-                                                                    }
-                                                                </style> -->
+                                                                                                                                </div>
+                                                                                                                                 <style>
+                                                                                                                                    @media screen and (max-width: 767px) {
+                                                                                                                                        .event-container{
+                                                                                                                                            display: flex;
+                                                                                                                                            flex-direction: column;
+                                                                                                                                            gap: 10px; j
+                                                                                                                                            ustify-content: space-between;
+                                                                                                                                            flex-wrap: wrap;
+                                                                                                                                        }
+                                                                                                                                        .event-container-box{
+                                                                                                                                            flex: 1;
+                                                                                                                                            width: 100%;
+                                                                                                                                            border-radius: 8px;
+                                                                                                                                            overflow: hidden;
+                                                                                                                                            cursor: pointer;
+                                                                                                                                            text-align: center;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                    @media screen and (min-width: 768px) {
+                                                                                                                                        .event-container{
+                                                                                                                                            display: flex;
+                                                                                                                                            gap: 10px; j
+                                                                                                                                            ustify-content: space-between;
+                                                                                                                                            flex-wrap: wrap;
+                                                                                                                                        }
+                                                                                                                                        .event-container-box{
+                                                                                                                                            flex: 1;
+                                                                                                                                            width: 30%;
+                                                                                                                                            border-radius: 8px;
+                                                                                                                                            overflow: hidden;
+                                                                                                                                            cursor: pointer;
+                                                                                                                                            text-align: center;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                </style> -->
 
 
     <div class="counter-container" style="margin-top: 30px; margin-bottom: 30px;">
@@ -1757,7 +1836,30 @@
     </style>
 
     <script>
+        // Store default button texts
+        const defaultButtonTexts = {
+            makeDropdown: 'Select Make',
+            modelDropdown: 'Select Model',
+            variantDropdown: 'Select Variant'
+        };
+
+        // Function to restore default text if no value is selected
+        function restoreDefaultText(buttonId) {
+            const button = document.getElementById(buttonId);
+            if (button && (!button.textContent || button.textContent.trim() === '')) {
+                button.textContent = defaultButtonTexts[buttonId];
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Set initial default texts
+            Object.keys(defaultButtonTexts).forEach(buttonId => {
+                const button = document.getElementById(buttonId);
+                if (button) {
+                    button.textContent = defaultButtonTexts[buttonId];
+                }
+            });
+
             window.currentFilters = {
                 make: '',
                 model: '',
@@ -1842,7 +1944,12 @@
                 return;
             }
 
-            dropdown.textContent = displayLabel || value;
+            if (!value || value === 'Any') {
+                // Reset to default text
+                dropdown.textContent = defaultButtonTexts[dropdownId] || dropdown.textContent;
+            } else {
+                dropdown.textContent = displayLabel || value;
+            }
             input.value = value;
 
             const filterName = inputId.replace('Input', '').toLowerCase();
@@ -2117,6 +2224,11 @@
         function updateAllDropdowns() {
             const allFilters = new URLSearchParams();
 
+            // Store the current button texts before updating
+            const makeText = document.getElementById('makeDropdown').textContent;
+            const modelText = document.getElementById('modelDropdown').textContent;
+            const variantText = document.getElementById('variantDropdown').textContent;
+
             // Original filtersForMake, which excludes 'make'
             const filtersForMake = new URLSearchParams();
             for (const [key, value] of Object.entries(window.currentFilters)) {
@@ -2132,6 +2244,17 @@
             for (const [key, value] of Object.entries(window.currentFilters)) {
                 if (value) {
                     allFilters.append(key, value);
+                }
+
+                // Restore the original text if no value is selected
+                if (!window.currentFilters.make) {
+                    document.getElementById('makeDropdown').textContent = makeText;
+                }
+                if (!window.currentFilters.model) {
+                    document.getElementById('modelDropdown').textContent = modelText;
+                }
+                if (!window.currentFilters.variant) {
+                    document.getElementById('variantDropdown').textContent = variantText;
                 }
             }
 
