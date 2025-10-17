@@ -72,7 +72,7 @@
 </head>
 
 <body class="border-top">
-    <nav class="navbar navbar-expand-lg mt-lg-2 ps-lg-3 pe-lg-3 pt-0 c-navbar-nav" style="z-index:999;">
+    <nav class="navbar navbar-expand-lg mt-lg-2 ps-lg-3 pe-lg-3 pt-2 c-navbar-nav" style="z-index:999;">
         <div class="container-fluid d-flex justify-content-between align-items-center" style="z-index: 1000;">
             <a class="navbar-brand fw-bold d-none d-md-block" href="{{ url('/') }}">
                 <img class="logo img-fluid" src="{{ asset('assets/logodark.svg') }}" alt="">
@@ -175,21 +175,24 @@
                     @endif
                 </ul>
                 @if (Auth::check())
-                    <a href="javascript:void(0);" id="submitListingBtnMobile" style="width: 100%; margin-top:20px;"
+                    <a href="javascript:void(0);" id="submitListingBtnMobile"
+                        style="width: 100%; margin-top:20px; margin-right: -16px;"
                         class="c-btn bg-white text-black pt-2 pb-2 d-lg-none" type="submit"
                         onclick="redirectToPage()">
                         Dashboard
                     </a>
                 @endif
                 @if (Auth::check())
-                    <a class="c-btn bg-white text-black pt-2 pb-2 d-none d-lg-block" href="{{ route('dashboard') }}">
+                    <a style="margin-right: -16px" class="c-btn bg-white text-black pt-2 pb-2 d-none d-lg-block"
+                        href="{{ route('dashboard') }}">
                         Dashboard
                     </a>
                 @endif
-                <a href="javascript:void(0);" id="submitListingBtn" style="min-width: 160px;"
-                    class="c-btn bg-white text-black pt-2 pb-2 d-none d-lg-block" type="submit"
-                    onclick="redirectToPage()">
-                    Sell Your Car <i class="fas fa-circle-arrow-right ml-10"></i>
+                <a href="javascript:void(0);" id="submitListingBtn"
+                    style="min-width: 160px; display: inline-flex; align-items: center; justify-content: space-between; background-color: white; color: black; padding 1em; text-decoration: none; border-radius: 3em;"
+                    class="pt-1 pb-1" type="submit" onclick="redirectToPage()">
+                    <span style="margin-left: 20px;">Sell Your Car</span>
+                    <i style="padding-right: 5px;" class="fas fa-circle-arrow-right fa-2x"></i>
                 </a>
             </div>
         </div>
@@ -200,7 +203,7 @@
         .navbar {
             height: 5em !important;
             /* background: #030303; */
-            margin-top: 0px !important;
+            margin-top: -1px !important;
 
         }
 
@@ -697,7 +700,9 @@
 
         @guest
         // Keep the text as 'Submit Listing' for guests
-        document.getElementById("submitListingBtn").innerText = "Sell Car";
+        document.getElementById("submitListingBtn").innerHTML =
+            `<span style="margin-left: 20px;">Sell Your Car</span>
+                    <i style="padding-right: 5px;" class="fas fa-circle-arrow-right fa-2x"></i>`;
         // Redirect to the login route for guests
         window.location.href = "{{ route('login') }}";
         @endguest
@@ -711,13 +716,17 @@
                 document.getElementById("submitListingBtn").innerText = "Admin";
             @else
                 // Change the text to 'Dashboard' for normal users
-                document.getElementById("submitListingBtn").innerText = "Sell Car";
+                document.getElementById("submitListingBtn").innerHTML =
+                    `<span style="margin-left: 20px;">Sell Your Car</span>
+                    <i style="padding-right: 5px;" class="fas fa-circle-arrow-right fa-2x"></i>`;
             @endif
         @endauth
 
         @guest
         // Keep the text as 'Submit Listing' for guests
-        document.getElementById("submitListingBtn").innerText = "Sell Car";
+        document.getElementById("submitListingBtn").innerHTML =
+            `<span style="margin-left: 20px;">Sell Your Car</span>
+                    <i style="padding-right: 5px;" class="fas fa-circle-arrow-right fa-2x"></i>`;
         @endguest
         };
     </script>
