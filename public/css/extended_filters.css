@@ -1,0 +1,57 @@
+// Extended filters toggle styles
+.extended-filters {
+    display: none;
+}
+
+.extended-filters.active {
+    display: block;
+}
+
+.default-filters.hidden {
+    display: none;
+}
+
+// New filter rows styles
+.filter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.filter-row .filter-col {
+    flex: 1;
+    min-width: 0;
+}
+
+.filter-col label {
+    display: block;
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 2px;
+    text-align: left;
+    font-weight: 900;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.filter-row .dropdown {
+    width: 100%;
+}
+
+// Maintain consistent styling with existing dropdowns
+.extended-filters .dropdown button {
+    width: 100%;
+    text-align: left;
+    background-color: var(--search-color, #F5F6FA);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+.extended-filters .dropdown-menu {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+}
