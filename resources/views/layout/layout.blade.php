@@ -73,9 +73,9 @@
 
 <body class="border-top">
     <nav class="navbar navbar-expand-lg mt-lg-2 ps-lg-3 pe-lg-3 pt-2 c-navbar-nav" style="z-index:999;">
-        <div class="container-fluid d-flex justify-content-between align-items-center" style="z-index: 1000;">
+        <div class="container-fluid d-flex justify-content-between align-items-center" style="z-index: 1000; padding: 0 119px;">
             <a class="navbar-brand fw-bold d-none d-md-block" href="{{ url('/') }}">
-                <img class="logo img-fluid" src="{{ asset('assets/logodark.svg') }}" alt="">
+                <img class="logo img-fluid" src="{{ asset('assets/logodark.svg') }}" style="height: 46px;" alt="">
             </a>
             <a class="navbar-brand fw-bold d-lg-none" href="{{ url('/') }}"
                 style="color: white; font-size: 28px;">
@@ -201,7 +201,7 @@
     <!-- CSS -->
     <style>
         .navbar {
-            height: 5em !important;
+            height: 79px !important;
             /* background: #030303; */
             margin-top: -1px !important;
 
