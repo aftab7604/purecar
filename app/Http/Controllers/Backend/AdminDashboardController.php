@@ -9,7 +9,7 @@ use App\Models\PaymentRecord;
 use App\Models\User;
 use App\Models\Advert_image;
 use App\Models\Package;
-use App\Models\advert;
+use App\Models\Advert;
 use App\Models\Car;
 use App\Models\AdvertReview;
 use App\Models\Author;

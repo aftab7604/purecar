@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\advert;
+use App\Models\Advert;
 use App\Models\Favourite;
 use App\Models\Counter;
 use Illuminate\Http\Request;
