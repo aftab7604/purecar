@@ -20,149 +20,192 @@ use Illuminate\Support\Str;
 
 class landingPageController extends Controller
 {
-    
- public function landing_page(){
-    $data = Car::whereHas('advert', function ($query) {
-        $query->where('status', 'active');
-    })->latest()->take(16)->get();
-    
-    $blogs = Blog::latest()->take(5)->get();
-    $sections = PageSection::all();
-    $brands = Brand::all();
-    $events = Event::latest()->take(3)->get();
-    $forum_posts = ForumPost::latest()->take(4)->get();
-    
 
-    $price_ranges = [
-        ['min' => 500, 'max' => 1000],
-        ['min' => 1000, 'max' => 1500],
-        ['min' => 1500, 'max' => 2000],
-        ['min' => 2000, 'max' => 2500],
-        ['min' => 2500, 'max' => 3000],
-        ['min' => 3000, 'max' => 3500],
-        ['min' => 3500, 'max' => 4000],
-        ['min' => 4000, 'max' => 4500],
-        ['min' => 4500, 'max' => 5000],
-        ['min' => 5000, 'max' => 5500],
-        ['min' => 5500, 'max' => 6000],
-        ['min' => 6000, 'max' => 6500],
-        ['min' => 6500, 'max' => 7000],
-        ['min' => 7000, 'max' => 7500],
-        ['min' => 7500, 'max' => 8000],
-        ['min' => 8000, 'max' => 8500],
-        ['min' => 8500, 'max' => 9000],
-        ['min' => 9000, 'max' => 9500],
-        ['min' => 10000, 'max' => 20000],
-        ['min' => 20000, 'max' => 30000],
-        ['min' => 30000, 'max' => 40000],
-        ['min' => 40000, 'max' => 50000],
-        ['min' => 50000, 'max' => 60000],
-        ['min' => 60000, 'max' => 70000],
-        ['min' => 70000, 'max' => 80000],
-        ['min' => 80000, 'max' => 90000],
-        ['min' => 90000, 'max' => 100000],
-        ['min' => 100000, 'max' => 200000],
-    ];
-    
-   
-    $price_counts = [];
-    foreach ($price_ranges as $range) {
-        $count = Car::whereBetween('price', [$range['min'], $range['max']])->count();
-        $price_counts[] = [
-            'min' => $range['min'],
-            'max' => $range['max'],
-            'count' => $count
+    public function landing_page()
+    {
+        $data = Car::whereHas('advert', function ($query) {
+            $query->where('status', 'active');
+        })->latest()->take(16)->get();
+
+        $blogs = Blog::latest()->take(5)->get();
+        $sections = PageSection::all();
+        $brands = Brand::all();
+        $events = Event::latest()->take(3)->get();
+        $forum_posts = ForumPost::latest()->take(4)->get();
+
+
+        $price_ranges = [
+            ['min' => 500, 'max' => 1000],
+            ['min' => 1000, 'max' => 1500],
+            ['min' => 1500, 'max' => 2000],
+            ['min' => 2000, 'max' => 2500],
+            ['min' => 2500, 'max' => 3000],
+            ['min' => 3000, 'max' => 3500],
+            ['min' => 3500, 'max' => 4000],
+            ['min' => 4000, 'max' => 4500],
+            ['min' => 4500, 'max' => 5000],
+            ['min' => 5000, 'max' => 5500],
+            ['min' => 5500, 'max' => 6000],
+            ['min' => 6000, 'max' => 6500],
+            ['min' => 6500, 'max' => 7000],
+            ['min' => 7000, 'max' => 7500],
+            ['min' => 7500, 'max' => 8000],
+            ['min' => 8000, 'max' => 8500],
+            ['min' => 8500, 'max' => 9000],
+            ['min' => 9000, 'max' => 9500],
+            ['min' => 10000, 'max' => 20000],
+            ['min' => 20000, 'max' => 30000],
+            ['min' => 30000, 'max' => 40000],
+            ['min' => 40000, 'max' => 50000],
+            ['min' => 50000, 'max' => 60000],
+            ['min' => 60000, 'max' => 70000],
+            ['min' => 70000, 'max' => 80000],
+            ['min' => 80000, 'max' => 90000],
+            ['min' => 90000, 'max' => 100000],
+            ['min' => 100000, 'max' => 200000],
         ];
-    }
-    
-   
-    $year_counts = Car::select('year', DB::raw('COUNT(*) as count'))
-        ->whereNotNull('year')
-        ->where('year', '>', 0)
-        ->groupBy('year')
-        ->orderBy('year', 'desc')
-        ->get()
-        ->map(function($item) {
-            return [
-                'year' => $item->year,
-                'count' => $item->count
+
+
+        $price_counts = [];
+        foreach ($price_ranges as $range) {
+            $count = Car::whereBetween('price', [$range['min'], $range['max']])->count();
+            $price_counts[] = [
+                'min' => $range['min'],
+                'max' => $range['max'],
+                'count' => $count
             ];
-        })
-        ->toArray();
-    
-    // Search field data
-    $search_field = [
-        'make' => Car::select('make', DB::raw('COUNT(*) as count'))
-            ->whereNotNull('make')
-            ->where('make', '!=', '')
-            ->groupBy('make')
-            ->orderBy('make')
-            ->get(),
-        'model' => Car::select('model', DB::raw('COUNT(*) as count'))
-            ->whereNotNull('model')
-            ->where('model', '!=', '')
-            ->groupBy('model')
-            ->orderBy('model')
-            ->get(),
-        'variant' => Car::select('variant', DB::raw('COUNT(*) as count'))
-            ->whereNotNull('variant')
-            ->where('variant', '!=', '')
-            ->groupBy('variant')
-            ->orderBy('variant')
-            ->get(),
-        'price' => Car::select('price', DB::raw('COUNT(*) as count'))
-            ->whereNotNull('price')
-            ->where('price', '>', 0)
-            ->groupBy('price')
-            ->orderBy('price')
-            ->get(),
-        'year' => Car::select('year', DB::raw('COUNT(*) as count'))
+        }
+
+
+        $year_counts = Car::select('year', DB::raw('COUNT(*) as count'))
             ->whereNotNull('year')
             ->where('year', '>', 0)
             ->groupBy('year')
             ->orderBy('year', 'desc')
-            ->get(),
-    ];
-    
-    return view('landing_page', compact(
-        'data',
-        'events',
-        'search_field',
-        'blogs',
-        'sections',
-        'brands',
-        'forum_posts',
-        'price_ranges',
-        'price_counts',
-        'year_counts'
-    ));
-}
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'year' => $item->year,
+                    'count' => $item->count
+                ];
+            })
+            ->toArray();
 
-public function fetchVariants(Request $request)
-{
-    $model = $request->input('model');
+        // Search field data
+        $search_field = [
+            'make' => Car::select('make', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('make')
+                ->where('make', '!=', '')
+                ->groupBy('make')
+                ->orderBy('make')
+                ->get(),
+            'model' => Car::select('model', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('model')
+                ->where('model', '!=', '')
+                ->groupBy('model')
+                ->orderBy('model')
+                ->get(),
+            'variant' => Car::select('variant', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('variant')
+                ->where('variant', '!=', '')
+                ->groupBy('variant')
+                ->orderBy('variant')
+                ->get(),
+            'price' => Car::select('price', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('price')
+                ->where('price', '>', 0)
+                ->groupBy('price')
+                ->orderBy('price')
+                ->get(),
+            'year' => Car::select('year', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('year')
+                ->where('year', '>', 0)
+                ->groupBy('year')
+                ->orderBy('year', 'desc')
+                ->get(),
+            'body_type' => Car::select('body_type', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('body_type')
+                ->where('body_type', '!=', '')
+                ->groupBy('body_type')
+                ->orderBy('body_type')
+                ->get(),
+            'fuel_type' => Car::select('fuel_type', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('fuel_type')
+                ->where('fuel_type', '!=', '')
+                ->groupBy('fuel_type')
+                ->orderBy('fuel_type')
+                ->get(),
+            'gear_box' => Car::select('gear_box', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('gear_box')
+                ->where('gear_box', '!=', '')
+                ->groupBy('gear_box')
+                ->orderBy('gear_box')
+                ->get(),
+            'engine_size' => Car::select('engine_size', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('engine_size')
+                ->where('engine_size', '!=', '')
+                ->groupBy('engine_size')
+                ->orderBy('engine_size')
+                ->get(),
+            'doors' => Car::select('doors', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('doors')
+                ->where('doors', '>', 0)
+                ->groupBy('doors')
+                ->orderBy('doors')
+                ->get(),
+            'colors' => Car::select('colors', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('colors')
+                ->where('colors', '!=', '')
+                ->groupBy('colors')
+                ->orderBy('colors')
+                ->get(),
+            'seller_type' => Car::select('seller_type', DB::raw('COUNT(*) as count'))
+                ->whereNotNull('seller_type')
+                ->where('seller_type', '!=', '')
+                ->groupBy('seller_type')
+                ->orderBy('seller_type')
+                ->get(),
+        ];
 
-  
-    $variants = Car::where('model', $model)
-        ->select('variant', DB::raw('COUNT(*) as count'))
-        ->groupBy('variant')
-        ->get();
+        return view('landing_page', compact(
+            'data',
+            'events',
+            'search_field',
+            'blogs',
+            'sections',
+            'brands',
+            'forum_posts',
+            'price_ranges',
+            'price_counts',
+            'year_counts'
+        ));
+    }
 
-    return response()->json(['variants' => $variants]);
-}
-public function fetchModels(Request $request)
+    public function fetchVariants(Request $request)
     {
-       
+        $model = $request->input('model');
+
+
+        $variants = Car::where('model', $model)
+            ->select('variant', DB::raw('COUNT(*) as count'))
+            ->groupBy('variant')
+            ->get();
+
+        return response()->json(['variants' => $variants]);
+    }
+    public function fetchModels(Request $request)
+    {
+
         $make = $request->query('make');
-        $priceFrom = $request->query('pricefrom'); 
-        $priceTo = $request->query('priceto');     
+        $priceFrom = $request->query('pricefrom');
+        $priceTo = $request->query('priceto');
         $yearFrom = $request->query('yearfrom');
         $yearTo = $request->query('yearto');
 
-      
+
         $query = Car::query()->where('make', $make);
 
-      
+
         if ($priceFrom) {
             $query->where('price', '>=', $priceFrom);
         }
@@ -170,7 +213,7 @@ public function fetchModels(Request $request)
             $query->where('price', '<=', $priceTo);
         }
 
-      
+
         if ($yearFrom) {
             $query->where('year', '>=', $yearFrom);
         }
@@ -178,7 +221,7 @@ public function fetchModels(Request $request)
             $query->where('year', '<=', $yearTo);
         }
 
-    
+
         $models = $query->groupBy('model')
             ->select('model', DB::raw('count(*) as count'))
             ->get();
@@ -186,30 +229,30 @@ public function fetchModels(Request $request)
         return response()->json(['models' => $models]);
     }
 
-   
+
     public function fetchVariantshome(Request $request)
     {
-       
+
         $make = $request->get('make');
         $model = $request->get('model');
-        $priceFrom = $request->query('pricefrom'); 
-        $priceTo = $request->query('priceto');     
+        $priceFrom = $request->query('pricefrom');
+        $priceTo = $request->query('priceto');
         $yearFrom = $request->query('yearfrom');
         $yearTo = $request->query('yearto');
 
-    
+
         if (!$make || !$model) {
             return response()->json(['variants' => []]);
         }
 
-     
+
         $query = Car::query()
             ->where('make', $make)
             ->where('model', $model)
             ->whereNotNull('variant')
             ->where('variant', '!=', '');
 
-      
+
         if ($priceFrom) {
             $query->where('price', '>=', $priceFrom);
         }
@@ -217,7 +260,7 @@ public function fetchModels(Request $request)
             $query->where('price', '<=', $priceTo);
         }
 
-  
+
         if ($yearFrom) {
             $query->where('year', '>=', $yearFrom);
         }
@@ -225,7 +268,7 @@ public function fetchModels(Request $request)
             $query->where('year', '<=', $yearTo);
         }
 
-        
+
         $variants = $query->groupBy('variant')
             ->select('variant', DB::raw('COUNT(*) as count'))
             ->orderBy('variant')
@@ -233,286 +276,287 @@ public function fetchModels(Request $request)
 
         return response()->json(['variants' => $variants]);
     }
-// public function fetchVariantshome(Request $request)
-// {
-//     $make = $request->get('make');
-//     $model = $request->get('model');
-    
-//     if (!$make || !$model) {
-//         return response()->json(['variants' => []]);
-//     }
-    
-//     $variants = Car::select('variant', DB::raw('COUNT(*) as count'))
-//         ->where('make', $make)
-//         ->where('model', $model)
-//         ->whereNotNull('variant')
-//         ->where('variant', '!=', '')
-//         ->groupBy('variant')
-//         ->orderBy('variant')
-//         ->get();
-    
-//     return response()->json(['variants' => $variants]);
-// }
-// public function fetchModels(Request $request)
-// {
-//     // Extract all filter parameters
-//     $make = $request->input('make');
-//     $priceFrom = $request->input('pricefrom');
-//     $priceTo = $request->input('priceto');
-//     $fuelType = $request->input('fuel_type');
-//     $bodyType = $request->input('body_type');
-//     $engineSize = $request->input('engine_size');
-//     $doors = $request->input('doors');
-//     $colors = $request->input('colors');
-//     $sellerType = $request->input('seller_type');
-//     $gearBox = $request->input('gear_box');
-//     $yearFrom = $request->input('yearFrom');
-//     $yearTo = $request->input('yearTo');
-    
-//     // Start building the query with the make filter
-//     $query = Car::where('make', $make);
-    
-//     // Apply all other active filters
-//     if ($priceFrom) {
-//         $query->where('price', '>=', $priceFrom);
-//     }
-    
-//     if ($priceTo) {
-//         $query->where('price', '<=', $priceTo);
-//     }
-    
-//     if ($fuelType) {
-//         $query->where('fuel_type', $fuelType);
-//     }
-    
-//     if ($bodyType) {
-//         $query->where('body_type', $bodyType);
-//     }
-    
-//     if ($engineSize) {
-//         $query->where('engine_size', $engineSize);
-//     }
-    
-//     if ($doors) {
-//         $query->where('doors', $doors);
-//     }
-    
-//     if ($colors) {
-//         $query->where('colors', $colors);
-//     }
-    
-//     if ($sellerType) {
-//         $query->where('seller_type', $sellerType);
-//     }
-    
-//     if ($gearBox) {
-//         $query->where('gear_box', $gearBox);
-//     }
-    
-//     if ($yearFrom) {
-//         $query->where('year', '>=', $yearFrom);
-//     }
-    
-//     if ($yearTo) {
-//         $query->where('year', '<=', $yearTo);
-//     }
-    
-//     // Get models after applying all filters
-//     $models = $query->select('model', DB::raw('COUNT(*) as count'))
-//                     ->groupBy('model')
-//                     ->get();
-    
-//     return response()->json(['models' => $models]);
-// }
+    // public function fetchVariantshome(Request $request)
+    // {
+    //     $make = $request->get('make');
+    //     $model = $request->get('model');
 
-// public function fetchVariants(Request $request)
-// {
-//     // Extract all filter parameters
-//     $model = $request->input('model');
-//     $make = $request->input('make');
-//     $priceFrom = $request->input('pricefrom');
-//     $priceTo = $request->input('priceto');
-//     $fuelType = $request->input('fuel_type');
-//     $bodyType = $request->input('body_type');
-//     $engineSize = $request->input('engine_size');
-//     $doors = $request->input('doors');
-//     $colors = $request->input('colors');
-//     $sellerType = $request->input('seller_type');
-//     $gearBox = $request->input('gear_box');
-//     $yearFrom = $request->input('yearFrom');
-//     $yearTo = $request->input('yearTo');
-    
-//     // Start building the query with the model filter
-//     $query = Car::where('model', $model);
-    
-//     // Apply all other active filters
-//     if ($make) {
-//         $query->where('make', $make);
-//     }
-    
-//     if ($priceFrom) {
-//         $query->where('price', '>=', $priceFrom);
-//     }
-    
-//     if ($priceTo) {
-//         $query->where('price', '<=', $priceTo);
-//     }
-    
-//     if ($fuelType) {
-//         $query->where('fuel_type', $fuelType);
-//     }
-    
-//     if ($bodyType) {
-//         $query->where('body_type', $bodyType);
-//     }
-    
-//     if ($engineSize) {
-//         $query->where('engine_size', $engineSize);
-//     }
-    
-//     if ($doors) {
-//         $query->where('doors', $doors);
-//     }
-    
-//     if ($colors) {
-//         $query->where('colors', $colors);
-//     }
-    
-//     if ($sellerType) {
-//         $query->where('seller_type', $sellerType);
-//     }
-    
-//     if ($gearBox) {
-//         $query->where('gear_box', $gearBox);
-//     }
-    
-//     if ($yearFrom) {
-//         $query->where('year', '>=', $yearFrom);
-//     }
-    
-//     if ($yearTo) {
-//         $query->where('year', '<=', $yearTo);
-//     }
-    
-//     // Get variants after applying all filters
-//     $variants = $query->select('variant', DB::raw('COUNT(*) as count'))
-//                     ->groupBy('variant')
-//                     ->get();
-    
-//     return response()->json(['variants' => $variants]);
-// }
-// public function fetchModels(Request $request)
-//     {
-//         $filters = $request->only([
-//             'make', 'model', 'variant', 'fuel_type', 'body_type', 'engine_size',
-//             'doors', 'colors', 'seller_type', 'gear_box', 'miles', 'year_from',
-//             'year_to', 'price_from', 'price_to'
-//         ]);
+    //     if (!$make || !$model) {
+    //         return response()->json(['variants' => []]);
+    //     }
 
-//         $query = Car::query();
+    //     $variants = Car::select('variant', DB::raw('COUNT(*) as count'))
+    //         ->where('make', $make)
+    //         ->where('model', $model)
+    //         ->whereNotNull('variant')
+    //         ->where('variant', '!=', '')
+    //         ->groupBy('variant')
+    //         ->orderBy('variant')
+    //         ->get();
 
-//         foreach ($filters as $key => $value) {
-//             if ($value && $value !== 'Any') {
-//                 if ($key === 'price_from') {
-//                     $query->where('price', '>=', $value);
-//                 } elseif ($key === 'price_to') {
-//                     $query->where('price', '<=', $value);
-//                 } elseif ($key === 'year_from') {
-//                     $query->where('year', '>=', $value);
-//                 } elseif ($key === 'year_to') {
-//                     $query->where('year', '<=', $value);
-//                 } elseif ($key === 'miles') {
-//                     $query->where('miles', '<=', $value);
-//                 } else {
-//                     $query->where($key, $value);
-//                 }
-//             }
-//         }
+    //     return response()->json(['variants' => $variants]);
+    // }
+    // public function fetchModels(Request $request)
+    // {
+    //     // Extract all filter parameters
+    //     $make = $request->input('make');
+    //     $priceFrom = $request->input('pricefrom');
+    //     $priceTo = $request->input('priceto');
+    //     $fuelType = $request->input('fuel_type');
+    //     $bodyType = $request->input('body_type');
+    //     $engineSize = $request->input('engine_size');
+    //     $doors = $request->input('doors');
+    //     $colors = $request->input('colors');
+    //     $sellerType = $request->input('seller_type');
+    //     $gearBox = $request->input('gear_box');
+    //     $yearFrom = $request->input('yearFrom');
+    //     $yearTo = $request->input('yearTo');
 
-//         $models = $query->select('model')
-//             ->groupBy('model')
-//             ->get()
-//             ->map(function ($item) {
-//                 return [
-//                     'model' => $item->model,
-//                     'count' => Car::where('model', $item->model)->count()
-//                 ];
-//             });
+    //     // Start building the query with the make filter
+    //     $query = Car::where('make', $make);
 
-//         return response()->json(['models' => $models]);
-//     }
+    //     // Apply all other active filters
+    //     if ($priceFrom) {
+    //         $query->where('price', '>=', $priceFrom);
+    //     }
 
-//     public function fetchVariants(Request $request)
-//     {
-//         $filters = $request->only([
-//             'make', 'model', 'variant', 'fuel_type', 'body_type', 'engine_size',
-//             'doors', 'colors', 'seller_type', 'gear_box', 'miles', 'year_from',
-//             'year_to', 'price_from', 'price_to'
-//         ]);
+    //     if ($priceTo) {
+    //         $query->where('price', '<=', $priceTo);
+    //     }
 
-//         $query = Car::query();
+    //     if ($fuelType) {
+    //         $query->where('fuel_type', $fuelType);
+    //     }
 
-//         foreach ($filters as $key => $value) {
-//             if ($value && $value !== 'Any') {
-//                 if ($key === 'price_from') {
-//                     $query->where('price', '>=', $value);
-//                 } elseif ($key === 'price_to') {
-//                     $query->where('price', '<=', $value);
-//                 } elseif ($key === 'year_from') {
-//                     $query->where('year', '>=', $value);
-//                 } elseif ($key === 'year_to') {
-//                     $query->where('year', '<=', $value);
-//                 } elseif ($key === 'miles') {
-//                     $query->where('miles', '<=', $value);
-//                 } else {
-//                     $query->where($key, $value);
-//                 }
-//             }
-//         }
+    //     if ($bodyType) {
+    //         $query->where('body_type', $bodyType);
+    //     }
 
-//         $variants = $query->select('variant')
-//             ->groupBy('variant')
-//             ->get()
-//             ->map(function ($item) {
-//                 return [
-//                     'variant' => $item->variant,
-//                     'count' => Car::where('variant', $item->variant)->count()
-//                 ];
-//             });
+    //     if ($engineSize) {
+    //         $query->where('engine_size', $engineSize);
+    //     }
 
-//         return response()->json(['variants' => $variants]);
-//     }
+    //     if ($doors) {
+    //         $query->where('doors', $doors);
+    //     }
 
-private function getSections()
-{
-    return PageSection::all();
-}
-public function signuppage()
-{
-    $sections = $this->getSections();
-    return view('signup_page', compact('sections'));
-}
+    //     if ($colors) {
+    //         $query->where('colors', $colors);
+    //     }
 
-public function loginpage()
-{
-    $sections = $this->getSections();
-    return view('login_page', compact('sections'));
-}
-public function adminloginpage()
-{   $sections = $this->getSections();
-    return view('admin_login/admin_login_page', compact('sections'));
-}
+    //     if ($sellerType) {
+    //         $query->where('seller_type', $sellerType);
+    //     }
 
+    //     if ($gearBox) {
+    //         $query->where('gear_box', $gearBox);
+    //     }
 
+    //     if ($yearFrom) {
+    //         $query->where('year', '>=', $yearFrom);
+    //     }
 
+    //     if ($yearTo) {
+    //         $query->where('year', '<=', $yearTo);
+    //     }
+
+    //     // Get models after applying all filters
+    //     $models = $query->select('model', DB::raw('COUNT(*) as count'))
+    //                     ->groupBy('model')
+    //                     ->get();
+
+    //     return response()->json(['models' => $models]);
+    // }
+
+    // public function fetchVariants(Request $request)
+    // {
+    //     // Extract all filter parameters
+    //     $model = $request->input('model');
+    //     $make = $request->input('make');
+    //     $priceFrom = $request->input('pricefrom');
+    //     $priceTo = $request->input('priceto');
+    //     $fuelType = $request->input('fuel_type');
+    //     $bodyType = $request->input('body_type');
+    //     $engineSize = $request->input('engine_size');
+    //     $doors = $request->input('doors');
+    //     $colors = $request->input('colors');
+    //     $sellerType = $request->input('seller_type');
+    //     $gearBox = $request->input('gear_box');
+    //     $yearFrom = $request->input('yearFrom');
+    //     $yearTo = $request->input('yearTo');
+
+    //     // Start building the query with the model filter
+    //     $query = Car::where('model', $model);
+
+    //     // Apply all other active filters
+    //     if ($make) {
+    //         $query->where('make', $make);
+    //     }
+
+    //     if ($priceFrom) {
+    //         $query->where('price', '>=', $priceFrom);
+    //     }
+
+    //     if ($priceTo) {
+    //         $query->where('price', '<=', $priceTo);
+    //     }
+
+    //     if ($fuelType) {
+    //         $query->where('fuel_type', $fuelType);
+    //     }
+
+    //     if ($bodyType) {
+    //         $query->where('body_type', $bodyType);
+    //     }
+
+    //     if ($engineSize) {
+    //         $query->where('engine_size', $engineSize);
+    //     }
+
+    //     if ($doors) {
+    //         $query->where('doors', $doors);
+    //     }
+
+    //     if ($colors) {
+    //         $query->where('colors', $colors);
+    //     }
+
+    //     if ($sellerType) {
+    //         $query->where('seller_type', $sellerType);
+    //     }
+
+    //     if ($gearBox) {
+    //         $query->where('gear_box', $gearBox);
+    //     }
+
+    //     if ($yearFrom) {
+    //         $query->where('year', '>=', $yearFrom);
+    //     }
+
+    //     if ($yearTo) {
+    //         $query->where('year', '<=', $yearTo);
+    //     }
+
+    //     // Get variants after applying all filters
+    //     $variants = $query->select('variant', DB::raw('COUNT(*) as count'))
+    //                     ->groupBy('variant')
+    //                     ->get();
+
+    //     return response()->json(['variants' => $variants]);
+    // }
+    // public function fetchModels(Request $request)
+    //     {
+    //         $filters = $request->only([
+    //             'make', 'model', 'variant', 'fuel_type', 'body_type', 'engine_size',
+    //             'doors', 'colors', 'seller_type', 'gear_box', 'miles', 'year_from',
+    //             'year_to', 'price_from', 'price_to'
+    //         ]);
+
+    //         $query = Car::query();
+
+    //         foreach ($filters as $key => $value) {
+    //             if ($value && $value !== 'Any') {
+    //                 if ($key === 'price_from') {
+    //                     $query->where('price', '>=', $value);
+    //                 } elseif ($key === 'price_to') {
+    //                     $query->where('price', '<=', $value);
+    //                 } elseif ($key === 'year_from') {
+    //                     $query->where('year', '>=', $value);
+    //                 } elseif ($key === 'year_to') {
+    //                     $query->where('year', '<=', $value);
+    //                 } elseif ($key === 'miles') {
+    //                     $query->where('miles', '<=', $value);
+    //                 } else {
+    //                     $query->where($key, $value);
+    //                 }
+    //             }
+    //         }
+
+    //         $models = $query->select('model')
+    //             ->groupBy('model')
+    //             ->get()
+    //             ->map(function ($item) {
+    //                 return [
+    //                     'model' => $item->model,
+    //                     'count' => Car::where('model', $item->model)->count()
+    //                 ];
+    //             });
+
+    //         return response()->json(['models' => $models]);
+    //     }
+
+    //     public function fetchVariants(Request $request)
+    //     {
+    //         $filters = $request->only([
+    //             'make', 'model', 'variant', 'fuel_type', 'body_type', 'engine_size',
+    //             'doors', 'colors', 'seller_type', 'gear_box', 'miles', 'year_from',
+    //             'year_to', 'price_from', 'price_to'
+    //         ]);
+
+    //         $query = Car::query();
+
+    //         foreach ($filters as $key => $value) {
+    //             if ($value && $value !== 'Any') {
+    //                 if ($key === 'price_from') {
+    //                     $query->where('price', '>=', $value);
+    //                 } elseif ($key === 'price_to') {
+    //                     $query->where('price', '<=', $value);
+    //                 } elseif ($key === 'year_from') {
+    //                     $query->where('year', '>=', $value);
+    //                 } elseif ($key === 'year_to') {
+    //                     $query->where('year', '<=', $value);
+    //                 } elseif ($key === 'miles') {
+    //                     $query->where('miles', '<=', $value);
+    //                 } else {
+    //                     $query->where($key, $value);
+    //                 }
+    //             }
+    //         }
+
+    //         $variants = $query->select('variant')
+    //             ->groupBy('variant')
+    //             ->get()
+    //             ->map(function ($item) {
+    //                 return [
+    //                     'variant' => $item->variant,
+    //                     'count' => Car::where('variant', $item->variant)->count()
+    //                 ];
+    //             });
+
+    //         return response()->json(['variants' => $variants]);
+    //     }
+
+    private function getSections()
+    {
+        return PageSection::all();
+    }
+    public function signuppage()
+    {
+        $sections = $this->getSections();
+        return view('signup_page', compact('sections'));
+    }
+
+    public function loginpage()
+    {
+        $sections = $this->getSections();
+        return view('login_page', compact('sections'));
+    }
+    public function adminloginpage()
+    {
+        $sections = $this->getSections();
+        return view('admin_login/admin_login_page', compact('sections'));
+    }
 
 
-public function searchMake(Request $request)
+
+
+
+    public function searchMake(Request $request)
     {
         $priceRange = PriceSetting::first();
 
         if (!$priceRange) {
-           
+
             return response()->json([
                 'success' => false,
                 'message' => 'No price range set. Please configure price settings.',
@@ -539,8 +583,8 @@ public function searchMake(Request $request)
                 return [
                     'car_id' => $car->car_id,
                     'car_slug' => $car->slug,
-          
-          'make' => $car->make,
+
+                    'make' => $car->make,
                     'model' => $car->model,
                     'Trim' => $car->Trim,
                     'year' => $car->year,
@@ -557,91 +601,91 @@ public function searchMake(Request $request)
         ]);
     }
 
-    public function CheapestCars() {
+    public function CheapestCars()
+    {
         $data = Car::whereHas('advert', function ($query) {
-                $query->where('status', 'active');
-            })
-             ->where('price', '>', 0)
-            ->orderBy('price', 'asc') 
-            ->get(); 
-    
+            $query->where('status', 'active');
+        })
+            ->where('price', '>', 0)
+            ->orderBy('price', 'asc')
+            ->get();
+
         return view('cheapestcars.index', compact('data'));
     }
 
-public function showCarInfo($slug)
-{
-    $car_info = Car::with(['user', 'advert_images', 'advert'])->where('slug', $slug)->first();
-    if (!$car_info && is_numeric($slug)) {
-        $car_info = Car::with(['user', 'advert_images', 'advert'])->find($slug);
-    }
-    
-     if (!$car_info || !$car_info->advert) {
+    public function showCarInfo($slug)
+    {
+        $car_info = Car::with(['user', 'advert_images', 'advert'])->where('slug', $slug)->first();
+        if (!$car_info && is_numeric($slug)) {
+            $car_info = Car::with(['user', 'advert_images', 'advert'])->find($slug);
+        }
+
+        if (!$car_info || !$car_info->advert) {
             $parts = explode('-', $slug);
-            $make = $parts[0] ?? null;   
-            $model = $parts[1] ?? null;  
+            $make = $parts[0] ?? null;
+            $model = $parts[1] ?? null;
             return redirect()->route('search_car', [
                 'make' => $make,
                 'model' => $model,
             ]);
         }
-        
-    
-    Counter::create([
-        'advert_id' => $car_info->advert_id,
-        'counter_type' => 'page_view',
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
 
-    $user = $car_info->advert->user;
-  
-    $related_cars = Car::whereHas('advert', function ($query) use ($user) {
-        $query->where('user_id', $user->id)
+
+        Counter::create([
+            'advert_id' => $car_info->advert_id,
+            'counter_type' => 'page_view',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $user = $car_info->advert->user;
+
+        $related_cars = Car::whereHas('advert', function ($query) use ($user) {
+            $query->where('user_id', $user->id)
                 ->where('status', 'active');
-    })
-    ->where('car_id', '!=', $car_info->car_id)
-    ->latest() 
-    ->take(4) 
-    ->get();
+        })
+            ->where('car_id', '!=', $car_info->car_id)
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $total_cars = Car::whereHas('advert', function ($query) use ($user) {
-        $query->where('user_id', $user->id)
-              ->where('status', 'active');
-    })
-    ->count();
-
- 
-
-    $meta_title = $car_info->advert->name ?? 'Car Advert';
-    $meta_description = Str::limit(strip_tags($car_info->advert->description), 150);
-    $meta_image = !empty($car_info->advert->image) ? asset($car_info->advert->image) : null;
-    $meta_type = 'article';
-
-    return view('forum_carinfo', compact('car_info', 'related_cars', 'total_cars', 'meta_title', 'meta_description', 'meta_image', 'meta_type'));
-}
-
-public function termsAndConditions()
-{
-    return view('terms_and_conditions'); // This should match the Blade file name you saved.
-}
-public function privacyPolicy()
-{
-    return view('privacy_policy');
-}
-public function refundPolicy()
-{
-    return view('refund_policy');
-}
+        $total_cars = Car::whereHas('advert', function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                ->where('status', 'active');
+        })
+            ->count();
 
 
-public function fetchpacakges()
-{
-    
-    $packages = Package::where('is_active', true)
-                     ->orderBy('price', 'asc')
-                     ->get();
 
-    return view('pricing', compact('packages'));
-}
+        $meta_title = $car_info->advert->name ?? 'Car Advert';
+        $meta_description = Str::limit(strip_tags($car_info->advert->description), 150);
+        $meta_image = !empty($car_info->advert->image) ? asset($car_info->advert->image) : null;
+        $meta_type = 'article';
 
+        return view('forum_carinfo', compact('car_info', 'related_cars', 'total_cars', 'meta_title', 'meta_description', 'meta_image', 'meta_type'));
+    }
+
+    public function termsAndConditions()
+    {
+        return view('terms_and_conditions'); // This should match the Blade file name you saved.
+    }
+    public function privacyPolicy()
+    {
+        return view('privacy_policy');
+    }
+    public function refundPolicy()
+    {
+        return view('refund_policy');
+    }
+
+
+    public function fetchpacakges()
+    {
+
+        $packages = Package::where('is_active', true)
+            ->orderBy('price', 'asc')
+            ->get();
+
+        return view('pricing', compact('packages'));
+    }
 }
