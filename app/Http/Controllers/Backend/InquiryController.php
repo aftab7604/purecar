@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\advert;
+use App\Models\Advert;
 use Illuminate\Http\Request;
 use App\Models\Counter;
 use Illuminate\Support\Facades\Log;

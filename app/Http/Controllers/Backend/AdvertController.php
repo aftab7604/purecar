@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\advert;
+use App\Models\Advert;
 use App\Models\Author;
 use App\Models\Blog;
 use App\Models\BlogCategory;

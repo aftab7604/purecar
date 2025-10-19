@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Advert_image;
 use App\Models\AdvertImage;
 use App\Models\Package;
-use App\Models\advert;
+use App\Models\Advert;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
